@@ -3,12 +3,16 @@ package com.example.studentlist.model;
 public class Student {
     String name = "";
     String id = "";
+    String address = "";
+    String phoneNumber = "";
     boolean flag = false;
 
     public Student(){}
-    public Student(String name, String id, boolean flag) {
+    public Student(String name, String id,String address, String phoneNumber, boolean flag) {
         this.name = name;
         this.id = id;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
         this.flag = flag;
     }
 
@@ -35,5 +39,23 @@ public class Student {
     public boolean isFlag() {
         return flag;
     }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+
 }
 

@@ -5,32 +5,61 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.studentlist.model.Model;
 import com.example.studentlist.model.Student;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     List<Student> data;
+    FloatingActionButton addStudentBtn;
+
+    public interface OnStudentClickListener {
+        void onStudentClick(int position);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        addStudentBtn = findViewById(R.id.add_student_btn);
 
         data = Model.instance.getAllStudents();
+        Intent addIntent = new Intent(getApplicationContext(), AddStudent.class);
+        addStudentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(addIntent);
+            }
+        });
 
         RecyclerView list = findViewById(R.id.student_list);
         list.setHasFixedSize(true);
 
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new StudentAdapter());
+        StudentAdapter adapter = new StudentAdapter();
+        list.setAdapter(adapter);
+
+        adapter.setOnStudentCLickListener(new OnStudentClickListener() {
+            @Override
+            public void onStudentClick(int position) {
+                Log.d("TAG","row clicked:" + position);
+            }
+        });
+    }
+
+    public void onAddStudent(){
+
     }
 
     class StudentViewHolder extends RecyclerView.ViewHolder{
@@ -38,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         TextView studentId;
         CheckBox studentCheckBox;
 
-        public StudentViewHolder(@NonNull View itemView) {
+        public StudentViewHolder(@NonNull View itemView, OnStudentClickListener listener) {
             super(itemView);
 
             studentName = itemView.findViewById((R.id.studentListRow_name));
@@ -57,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    Log.d("TAG","row clicked:" + position);
+                    listener.onStudentClick(position);
                 }
             });
         }
@@ -72,12 +101,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class StudentAdapter extends RecyclerView.Adapter<StudentViewHolder>{
-
+        OnStudentClickListener listener;
+        void setOnStudentCLickListener(OnStudentClickListener listenerParam){
+            this.listener = listenerParam;
+        }
         @NonNull
         @Override
         public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = getLayoutInflater().inflate(R.layout.student_list_row, parent, false);
-            return new StudentViewHolder(view);
+            return new StudentViewHolder(view, listener);
         }
 
         @Override

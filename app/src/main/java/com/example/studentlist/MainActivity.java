@@ -87,6 +87,19 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     listener.onStudentClick(position);
+                    Intent detailsIntent = new Intent(getApplicationContext(), StudentDetails.class);
+//                    Log.d("hello", "the name is: " + data.get(position).getId());
+                    detailsIntent.putExtra("student_id", data.get(position).getId());
+                    detailsIntent.putExtra("student_name", data.get(position).getName());
+                    detailsIntent.putExtra("student_address", data.get(position).getAddress());
+                    detailsIntent.putExtra("student_phone", data.get(position).getPhoneNumber());
+                    detailsIntent.putExtra("student_checked", data.get(position).isFlag());
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(detailsIntent);
+                        }
+                    });
                 }
             });
         }

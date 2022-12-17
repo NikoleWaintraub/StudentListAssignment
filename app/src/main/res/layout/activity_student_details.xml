@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudentDetails">
+
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="200dp"
+        android:text="Edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checked_value"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="175dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/student" />
+
+    <TextView
+        android:id="@+id/name_value"
+        android:layout_width="149dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="92dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo" />
+
+    <TextView
+        android:id="@+id/address_value"
+        android:layout_width="149dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="92dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/checked_value"
+        app:layout_constraintTop_toBottomOf="@+id/phone_value" />
+
+    <TextView
+        android:id="@+id/phone_value"
+        android:layout_width="149dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="92dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_value" />
+
+    <TextView
+        android:id="@+id/id_value"
+        android:layout_width="149dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="92dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_value" />
+
+    <TextView
+        android:id="@+id/name_key"
+        android:layout_width="35dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="44dp"
+        android:text="name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo" />
+
+    <TextView
+        android:id="@+id/id_key"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="12dp"
+        android:text="id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_key" />
+
+    <TextView
+        android:id="@+id/phone_key"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="12dp"
+        android:text="phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_key" />
+
+    <TextView
+        android:id="@+id/address_key"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:text="address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_key" />
+
+    <TextView
+        android:id="@+id/checked_key"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:text="checked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_key" />
+
+    <CheckBox
+        android:id="@+id/checked_value"
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="204dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_value" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

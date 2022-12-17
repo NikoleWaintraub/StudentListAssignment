@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void onAddStudent(){
-
-    }
 
     class StudentViewHolder extends RecyclerView.ViewHolder{
         TextView studentName;
@@ -88,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                     int position = getAdapterPosition();
                     listener.onStudentClick(position);
                     Intent detailsIntent = new Intent(getApplicationContext(), StudentDetails.class);
-//                    Log.d("hello", "the name is: " + data.get(position).getId());
                     detailsIntent.putExtra("student_id", data.get(position).getId());
                     detailsIntent.putExtra("student_name", data.get(position).getName());
                     detailsIntent.putExtra("student_address", data.get(position).getAddress());

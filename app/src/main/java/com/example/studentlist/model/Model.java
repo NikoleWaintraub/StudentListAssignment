@@ -22,4 +22,22 @@ public class Model {
     public void addStudent(Student student){
         data.add(student);
     }
+
+    public void editStudent(Student student){
+        Student existingStudent = data.get(Integer.parseInt(student.getId()));
+        existingStudent.setName(student.name);
+        existingStudent.setFlag(student.isFlag());
+        existingStudent.setPhoneNumber(student.phoneNumber);
+        existingStudent.setAddress(student.address);
+        existingStudent.setId(student.id);
+    }
+
+    public void deleteStudent(String studentId) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId() == studentId) {
+                data.remove(i);
+                break;
+            }
+        }
+    }
 }

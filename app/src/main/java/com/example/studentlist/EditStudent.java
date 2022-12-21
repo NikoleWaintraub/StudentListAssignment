@@ -72,7 +72,6 @@ public class EditStudent extends AppCompatActivity {
                         phoneNumberET.getText().toString(),
                         isCheckedCB.isChecked());
                 Model.instance.editStudent(newStudent);
-                finish();
             }
         });
     }

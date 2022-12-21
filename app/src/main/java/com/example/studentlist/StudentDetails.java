@@ -12,13 +12,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.studentlist.model.Model;
+import com.example.studentlist.model.Student;
 
 public class StudentDetails extends AppCompatActivity {
-    String id;
-    String name;
-    String address;
-    String phone;
-    Boolean checked;
+
+    int currentStudentPosition;
+    Student currentStudent;
+    int currentAmountOfStudents;
+
+    TextView nameView;
+    TextView idView;
+    TextView phoneView;
+    TextView addressView;
+    CheckBox checkBoxView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,32 +33,26 @@ public class StudentDetails extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            id = extras.getString("student_id");
-            name = extras.getString("student_name");
-            address = extras.getString("student_address");
-            phone = extras.getString("student_phone");
-            checked = extras.getBoolean("student_checked");
+            currentStudentPosition = extras.getInt("position");
+            currentStudent = Model.instance.getAllStudents().get(currentStudentPosition);
+            currentAmountOfStudents = Model.instance.getAllStudents().size();
 
-            TextView nameView = findViewById(R.id.name_value);
-            nameView.setText(name);
-            TextView idView = findViewById(R.id.id_value);
-            idView.setText(id);
-            TextView phoneView = findViewById(R.id.phone_value);
-            phoneView.setText(phone);
-            TextView addressView = findViewById(R.id.address_value);
-            addressView.setText(address);
-            CheckBox checkBoxView = findViewById(R.id.checked_value);
-            checkBoxView.setChecked(checked);
+            nameView = findViewById(R.id.name_value);
+            nameView.setText(currentStudent.getName());
+            idView = findViewById(R.id.id_value);
+            idView.setText(currentStudent.getId());
+            phoneView = findViewById(R.id.phone_value);
+            phoneView.setText(currentStudent.getPhoneNumber());
+            addressView = findViewById(R.id.address_value);
+            addressView.setText(currentStudent.getAddress());
+            checkBoxView = findViewById(R.id.checked_value);
+            checkBoxView.setChecked(currentStudent.isFlag());
         }
 
         Button editStudentButton = findViewById(R.id.edit_button);
 
         Intent editStudentIntent = new Intent(getApplicationContext(), EditStudent.class);
-        editStudentIntent.putExtra("student_id", id);
-        editStudentIntent.putExtra("student_name", name);
-        editStudentIntent.putExtra("student_address", address);
-        editStudentIntent.putExtra("student_phone", phone);
-        editStudentIntent.putExtra("student_checked", checked);
+        editStudentIntent.putExtra("position", currentStudentPosition);
         editStudentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,5 +60,21 @@ public class StudentDetails extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(currentAmountOfStudents > Model.instance.getAllStudents().size()) {
+            finish();
+        }
+
+        this.currentStudent = Model.instance.getAllStudents().get(currentStudentPosition);
+        this.nameView.setText(this.currentStudent.getName());
+        this.idView.setText(this.currentStudent.getId());
+        this.checkBoxView.setChecked(this.currentStudent.isFlag());
+        this.addressView.setText(this.currentStudent.getAddress());
+        this.phoneView.setText(this.currentStudent.getPhoneNumber());
     }
 }

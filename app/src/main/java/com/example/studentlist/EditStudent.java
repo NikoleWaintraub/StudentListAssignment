@@ -12,6 +12,10 @@ import com.example.studentlist.model.Model;
 import com.example.studentlist.model.Student;
 
 public class EditStudent extends AppCompatActivity {
+
+    private int currentStudentPosition;
+    private Student currentStudent;
+
     String id;
     String name;
     String address;
@@ -31,17 +35,14 @@ public class EditStudent extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            id = extras.getString("student_id");
-            name = extras.getString("student_name");
-            address = extras.getString("student_address");
-            phone = extras.getString("student_phone");
-            checked = extras.getBoolean("student_checked");
+            this.currentStudentPosition = extras.getInt("position");
+            this.currentStudent = Model.instance.getAllStudents().get(currentStudentPosition);
 
-            nameET.setText(name);
-            idET.setText(id);
-            phoneNumberET.setText(phone);
-            addressET.setText(address);
-            isCheckedCB.setChecked(checked);
+            nameET.setText(currentStudent.getName());
+            idET.setText(currentStudent.getId());
+            phoneNumberET.setText(currentStudent.getPhoneNumber());
+            addressET.setText(currentStudent.getAddress());
+            isCheckedCB.setChecked(currentStudent.isFlag());
         }
 
         Button cancelBtn = findViewById(R.id.cancelButton);
@@ -58,7 +59,7 @@ public class EditStudent extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Model.instance.deleteStudent(id);
+                Model.instance.getAllStudents().remove(currentStudent);
                 finish();
             }
         });
@@ -66,12 +67,12 @@ public class EditStudent extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Student newStudent = new Student(nameET.getText().toString(),
-                        idET.getText().toString(),
-                        addressET.getText().toString(),
-                        phoneNumberET.getText().toString(),
-                        isCheckedCB.isChecked());
-                Model.instance.editStudent(newStudent);
+                currentStudent.setName(nameET.getText().toString());
+                currentStudent.setId(idET.getText().toString());
+                currentStudent.setAddress(addressET.getText().toString());
+                currentStudent.setPhoneNumber(phoneNumberET.getText().toString());
+                currentStudent.setFlag(isCheckedCB.isChecked());
+                finish();
             }
         });
     }

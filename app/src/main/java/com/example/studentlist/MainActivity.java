@@ -23,6 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     List<Student> data;
     FloatingActionButton addStudentBtn;
+    StudentAdapter adapter;
 
     public interface OnStudentClickListener {
         void onStudentClick(int position);
@@ -47,17 +48,26 @@ public class MainActivity extends AppCompatActivity {
         list.setHasFixedSize(true);
 
         list.setLayoutManager(new LinearLayoutManager(this));
-        StudentAdapter adapter = new StudentAdapter();
+        adapter = new StudentAdapter();
         list.setAdapter(adapter);
 
-        adapter.setOnStudentCLickListener(new OnStudentClickListener() {
+        Intent detailsIntent = new Intent(getApplicationContext(), StudentDetails.class);
+
+        adapter.setOnStudentClickListener(new OnStudentClickListener() {
             @Override
             public void onStudentClick(int position) {
+                detailsIntent.putExtra("position", position);
+                startActivity(detailsIntent);
                 Log.d("TAG","row clicked:" + position);
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 
     class StudentViewHolder extends RecyclerView.ViewHolder{
         TextView studentName;
@@ -82,22 +92,14 @@ public class MainActivity extends AppCompatActivity {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    listener.onStudentClick(position);
-                    Intent detailsIntent = new Intent(getApplicationContext(), StudentDetails.class);
-                    detailsIntent.putExtra("student_id", data.get(position).getId());
-                    detailsIntent.putExtra("student_name", data.get(position).getName());
-                    detailsIntent.putExtra("student_address", data.get(position).getAddress());
-                    detailsIntent.putExtra("student_phone", data.get(position).getPhoneNumber());
-                    detailsIntent.putExtra("student_checked", data.get(position).isFlag());
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(detailsIntent);
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onStudentClick(position);
                         }
-                    });
+                    }
                 }
-            });
+        });
         }
 
         public void bind(Student student, int position) {
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     class StudentAdapter extends RecyclerView.Adapter<StudentViewHolder>{
         OnStudentClickListener listener;
-        void setOnStudentCLickListener(OnStudentClickListener listenerParam){
+        void setOnStudentClickListener(OnStudentClickListener listenerParam){
             this.listener = listenerParam;
         }
         @NonNull
